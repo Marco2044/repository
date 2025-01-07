@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Equazione di Secondo Grado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input {
+            margin: 5px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Risolutore di Equazioni di Secondo Grado</h1>
+        <p>Inserisci i coefficienti per costruire un'equazione del tipo:</p>
+        <p><strong>ax² + bx + c = 0</strong></p>
+
+        <label for="a">Coefficiente a (diverso da 0):</label>
+        <input type="number" id="a" step="any" placeholder="Inserisci a">
+
+        <label for="b">Coefficiente b:</label>
+        <input type="number" id="b" step="any" placeholder="Inserisci b">
+
+        <label for="c">Coefficiente c:</label>
+        <input type="number" id="c" step="any" placeholder="Inserisci c">
+
+        <button onclick="calcolaSoluzioni()">Calcola Soluzioni</button>
+
+        <div id="risultato" class="result"></div>
+    </div>
+
+    <script>
+        function calcolaSoluzioni() {
+
+            const a = parseFloat(document.getElementById('a').value);
+
+            const b = parseFloat(document.getElementById('b').value);
+
+            const c = parseFloat(document.getElementById('c').value);
+
+            const risultato = document.getElementById('risultato');
+            risultato.innerHTML = '';
+
+            if (isNaN(a) || a === 0) {
+                risultato.innerHTML = "<p>Il coefficiente 'a' deve essere un numero diverso da 0.</p>";
+                return;
+            }
+
+            let coeffB;
+            if (isNaN(b)) {
+                coeffB = 0;
+            } else {
+                coeffB = b;
+}
+            
+            let coeffC;
+            if (isNaN(c)) {
+                coeffC = 0; 
+            }else {
+                coeffC = c;
+            }
+
+            let d = coeffB * coeffB - 4 * a * coeffC;
+
+//          dopo modifica qui
+            if(coeffB === 0 && coeffC === 0) {
+                risultato.innerHTML = "<p>L'equazione è monomia. Soluzioni: x1 = 0, x2 = 0</p>";
+            } else if (coeffB === 0) {
+                let e = -coeffC / a;
+                if(e >= 0){
+                let f = Math.sqrt(e);
+                    risultato.innerHTML = `<p>L'equazione è pura. Soluzioni: x1 = ${f}, x2 = -${f}</p>`;
+                } else {
+                    risultato.innerHTML = "<p>L'equazione non ha soluzioni reali.</p>";
+                }
+            } else if (coeffC === 0) {
+                let x2 = -coeffB / a;
+                risultato.innerHTML = `<p>L'equazione è spuria. Soluzioni: x1 = 0, x2 = ${x2}</p>`;
+            } else {
+                if (d >= 0) {
+                    let x1 = (-coeffB + Math.sqrt(d)) / (2 * a);
+                    let x2 = (-coeffB - Math.sqrt(d)) / (2 * a);
+                    risultato.innerHTML = `<p>L'equazione è completa. Soluzioni: x1 = ${x1}, x2 = ${x2}</p>`;
+                } else {
+                    risultato.innerHTML = "<p>L'equazione non ha soluzioni reali.</p>";
+                }
+    }
+}
+    </script>
+</body>
+</html>
